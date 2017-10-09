@@ -52,7 +52,7 @@ ridgereg <- setRefClass("ridgereg",
                           },
                           coef = function()
                           {
-                            
+                            "This function returns the vector of beta coefficients  "
                             return(ridge_coef)
                           },
                           
