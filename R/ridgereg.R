@@ -11,7 +11,8 @@
 
 ridgereg <- setRefClass("ridgereg", 
                         fields = list(formula="formula",data="data.frame",lambda="numeric",
-                                      reg_coeff="numeric", fitted_reg = "numeric"),
+                                      beta_ridge="matrix", y_hat = "numeric",
+                                      ridge_coef="numeric"),
                         methods = list(
                           initialize= function(formula,data,lambda=0)
                           {
@@ -32,11 +33,50 @@ ridgereg <- setRefClass("ridgereg",
                             
                              
                             I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X))
-                            beta_hat <- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% Y )
+                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% Y )
                             
+                            y_hat <<- as.numeric(X %*% beta_ridge)
+                            
+                            ridge_coef <<- as.numeric(beta_ridge)
+                            names(ridge_coef) <<- rownames(beta_ridge)
+                            
+    
+                          },
+                          coef <- function()
+                          {
+                            
+                            return(ridge_coef)
+                          },
+                          
+                          predict <- function()
+                          {
+                            return(y_hat)
+                          },
+                          
+                          print <- function()
+                          {
+                            
+                            "This function prints the formula and dataset name as well as the calculated coefficients"
+                            r_name <- rownames(as.data.frame(ridge_coef))
+                            cat("Call:")
+                            cat("\n")
+                            formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",dataSetName,")",sep="")
+                            cat(formula_print)
+                            cat("\n")
+                            cat("\n")
+                            cat("Coefficients:")
+                            cat("\n")
+                            cat(" ")
+                            cat(r_name)
+                            cat(" ")
+                            cat("\n")
+                            cat(betaCoff)
+                            cat("\n")
+                            cat("\n")
                             
                             
                           }
+                          
                          )
                         ) 
 
