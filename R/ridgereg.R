@@ -10,7 +10,8 @@
 #'@export ridgereg
 
 ridgereg <- setRefClass("ridgereg", 
-                        fields = list(formula="formula",data="data.frame",lambda="numeric"),
+                        fields = list(formula="formula",data="data.frame",lambda="numeric",
+                                      reg_coeff="numeric", fitted_reg = "numeric"),
                         methods = list(
                           initialize= function(formula,data,lambda=0)
                           {
@@ -24,8 +25,16 @@ ridgereg <- setRefClass("ridgereg",
                             Y <- data[[(all.vars(formula)[1])]]
                             
                             
-                           
+                            for(i in 2:ncol(X))
+                            {
+                              X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
+                            }
+                            
                              
+                            I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X))
+                            beta_hat <- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% Y )
+                            
+                            
                             
                           }
                          )
@@ -33,4 +42,4 @@ ridgereg <- setRefClass("ridgereg",
 
 
 data(iris)
-a<-ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
+a<-ridgereg$new(formula=Petal.Length ~ Species ,data=iris)
