@@ -47,11 +47,12 @@ ridgereg <- setRefClass("ridgereg",
                           },
                           predict =  function()
                           {
-                            #this
+                            "This function returns the vector of calculated fitted values"
                             return(y_hat)
                           },
                           coef = function()
                           {
+                            
                             return(ridge_coef)
                           },
                           
