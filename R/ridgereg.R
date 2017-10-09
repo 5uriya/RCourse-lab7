@@ -10,7 +10,8 @@
 #'@export ridgereg
 
 ridgereg <- setRefClass("ridgereg", 
-                        fields = list(formula="formula",data="data.frame",lambda="numeric",
+                        fields = list(formula="formula",data="data.frame",
+                                      lambda="numeric",datasetName="character", 
                                       beta_ridge="matrix", y_hat = "numeric",
                                       ridge_coef="numeric"),
                         methods = list(
@@ -39,43 +40,44 @@ ridgereg <- setRefClass("ridgereg",
                             
                             ridge_coef <<- as.numeric(beta_ridge)
                             names(ridge_coef) <<- rownames(beta_ridge)
-                            
+                          
+                            datasetName <<-  deparse(substitute(data))  
     
                           },
-                          coef <- function()
-                          {
-                            
-                            return(ridge_coef)
-                          },
+                          # coef <- function()
+                          # {
+                          #   return(ridge_coef)
+                          # },
                           
                           predict <- function()
                           {
                             return(y_hat)
-                          },
-                          
-                          print <- function()
-                          {
-                            
-                            "This function prints the formula and dataset name as well as the calculated coefficients"
-                            r_name <- rownames(as.data.frame(ridge_coef))
-                            cat("Call:")
-                            cat("\n")
-                            formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",dataSetName,")",sep="")
-                            cat(formula_print)
-                            cat("\n")
-                            cat("\n")
-                            cat("Coefficients:")
-                            cat("\n")
-                            cat(" ")
-                            cat(r_name)
-                            cat(" ")
-                            cat("\n")
-                            cat(betaCoff)
-                            cat("\n")
-                            cat("\n")
-                            
-                            
                           }
+                          
+                          # print <- function()
+                          # {
+                          #   
+                          #   "This function prints the formula and dataset name as well as the calculated coefficients"
+                          #   r_name <- rownames(as.data.frame(ridge_coef))
+                          #   cat("Call:")
+                          #   cat("\n")
+                          #   formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",datasetName,")",sep="")
+                          #   cat(formula_print)
+                          #   cat("\n")
+                          #   cat("\n")
+                          #   cat("Coefficients:")
+                          #   cat("\n")
+                          #   cat(" ")
+                          #   cat(r_name)
+                          #   cat(" ")
+                          #   cat("\n")
+                          #   cat(ridge_coef)
+                          #   cat("\n")
+                          #   cat("\n")
+                          #   
+                          # }
+                          # 
+                          
                           
                          )
                         ) 
