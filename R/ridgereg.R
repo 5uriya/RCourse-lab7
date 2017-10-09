@@ -17,35 +17,37 @@ ridgereg <- setRefClass("ridgereg",
                         methods = list(
                           initialize= function(formula,data,lambda=0)
                           {
-                            #assigne values to class variables
-                            formula <<- formula
-                            data <<- data
-                            lambda <<- lambda
+                            "This function acts as constructor"
                             
-                            #generating X and Y
+                            formula <<- formula #formula assign to class formula variable
+                            data <<- data #data assign to class data variable
+                            lambda <<- lambda #lambda 
+                            
                             X <- model.matrix(formula,data)
                             Y <- data[[(all.vars(formula)[1])]]
                             
-                            
+                            #normal the data set X
                             for(i in 2:ncol(X))
                             {
                               X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
                             }
                             
-                             
+                            #create a identity Matrix
                             I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X))
+                            #calculate beta Ridge
                             beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% Y )
-                            
+                            #y_hat calculate
                             y_hat <<- as.numeric(X %*% beta_ridge)
                             
                             ridge_coef <<- as.numeric(beta_ridge)
                             names(ridge_coef) <<- rownames(beta_ridge)
-                          
+                            #extract dataset name 
                             datasetName <<-  deparse(substitute(data))  
     
                           },
                           predict =  function()
                           {
+                            #this
                             return(y_hat)
                           },
                           coef = function()
@@ -55,7 +57,6 @@ ridgereg <- setRefClass("ridgereg",
                           
                           print = function()
                           {
-
                             "This function prints the formula and dataset name as well as the calculated coefficients"
                             r_name <- rownames(as.data.frame(ridge_coef))
                             cat("Call:")
@@ -81,5 +82,9 @@ ridgereg <- setRefClass("ridgereg",
                         ) 
 
 
-data(iris)
-a<-ridgereg$new(formula=Petal.Length ~ Species ,data=iris)
+library(MASS)
+cc<- lm.ridge(Petal.Length ~ Species ,data=iris)
+cc
+# data(iris)
+# a<-ridgereg$new(formula=Petal.Length ~ Species ,data=iris)
+# a$print()
