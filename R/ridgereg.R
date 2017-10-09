@@ -15,7 +15,7 @@ ridgereg <- setRefClass("ridgereg",
                                       beta_ridge="matrix", y_hat = "numeric",
                                       ridge_coef="numeric"),
                         methods = list(
-                          initialize= function(formula,data,lambda=0)
+                          initialize= function(formula,data,lambda = 0, normalize = FALSE)
                           {
                             "This function acts as constructor"
                             
@@ -26,18 +26,17 @@ ridgereg <- setRefClass("ridgereg",
                             X <- model.matrix(formula,data)
                             Y <- data[[(all.vars(formula)[1])]]
                             
-                            #normal the data set X
-                            for(i in 2:ncol(X))
-                            {
-                              X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
-                            }
-                            
-                            #create a identity Matrix
-                            I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X))
-                            #calculate beta Ridge
-                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% Y )
-                            #y_hat calculate
-                            y_hat <<- as.numeric(X %*% beta_ridge)
+                            #normalize the data if normiliz param is TRUE
+                            if(normalize == TRUE)
+                              for(i in 2:ncol(X))
+                                X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
+                      
+                            I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X)) #create a identity Matrix
+                            diag(I_mat) <- sqrt(lambda) #update diagnal of lambda matrix of I_mat
+                            mat_Y <- as.matrix(Y) #convert into martix
+                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% mat_Y ) #calculate beta Ridge
+      
+                            y_hat <<- as.numeric(X %*% beta_ridge)    #y_hat calculate
                             
                             ridge_coef <<- as.numeric(beta_ridge)
                             names(ridge_coef) <<- rownames(beta_ridge)
@@ -82,10 +81,10 @@ ridgereg <- setRefClass("ridgereg",
                          )
                         ) 
 
-
-library(MASS)
-cc<- lm.ridge(Petal.Length ~ Species ,data=iris)
-cc
+# 
+# library(MASS)
+# cc<- lm.ridge(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+# cc
 # data(iris)
-# a<-ridgereg$new(formula=Petal.Length ~ Species ,data=iris)
+# a<-ridgereg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
 # a$print()
