@@ -19,4 +19,15 @@ a<-ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
 plot(ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris))}
 }}
 
+\section{Methods}{
+
+\describe{
+\item{\code{coef()}}{This function returns the vector of beta coefficients}
+
+\item{\code{initialize(formula, data, lambda = 0)}}{This function acts as constructor}
+
+\item{\code{predict()}}{This function returns the vector of calculated fitted values}
+
+\item{\code{print()}}{This function prints the formula and dataset name as well as the calculated coefficients}
+}}
 
