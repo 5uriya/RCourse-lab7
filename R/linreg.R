@@ -149,5 +149,4 @@ linreg <- setRefClass("linreg",
 
 
         )
-data(iris)
-a<-linreg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
+

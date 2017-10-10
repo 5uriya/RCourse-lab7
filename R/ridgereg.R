@@ -80,11 +80,3 @@ ridgereg <- setRefClass("ridgereg",
                           
                          )
                         ) 
-
-# 
-# library(MASS)
-# cc<- lm.ridge(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-# cc
-# data(iris)
-# a<-ridgereg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
-# a$print()
