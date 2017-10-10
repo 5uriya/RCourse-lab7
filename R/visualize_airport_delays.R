@@ -8,15 +8,15 @@
 visualize_airport_delays <- function()
 {
   requireNamespace("tidyverse")
-  require(tidyr)
-  require(nycflights13)
-  library(ggplot2)
+  requireNamespace("tidyr")
+  requireNamespace("nycflights13")
+  requireNamespace("ggplot2")
   
   data(flights)
   data(airports)
   
-  flight <- flights
-  airport <- airports
+  flight <- nycflights13::flights
+  airport <- nycflights13::airports
   
   #qyery to combine data
   combine_data <- dplyr::left_join(flight, airport, by = c("dest" =  "faa"))
