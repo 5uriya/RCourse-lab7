@@ -15,6 +15,14 @@ visualize_airport_delays <- function()
   #group_by data by dest
   library(dplyr)
   group_data <- combine_data %>%  group_by(dest)
+  #mean of arr_delay
+  flight_delay_mean <- group_data %>% summarise('arr_delay_mean' = mean( arr_delay, na.rm = TRUE)) 
+  
+  #get lat and lng 
+  lat_lng <- group_data %>% summarise("cord" = sprintf("lat= %s lon = %s" , lat[1], lon[1]))
+  
+  
+  data_frame <- data.frame(flight_delay_mean,lat_lng[,2])
   
 }
 
