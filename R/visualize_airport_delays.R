@@ -23,7 +23,7 @@ visualize_airport_delays <- function()
   
   
   data_frame <- data.frame(flight_delay_mean,lat_lng[,2])
-  library(ggplot2)
+ 
   p<- ggplot(data_frame, aes(x = dest, y = arr_delay_mean, label = cord)) + 
     geom_point() 
   return(p)
