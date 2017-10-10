@@ -11,6 +11,7 @@ visualize_airport_delays <- function()
   requireNamespace("tidyr")
   requireNamespace("nycflights13")
   requireNamespace("ggplot2")
+  requireNamespace("dplyr")
   
   data(flights)
   data(airports)
