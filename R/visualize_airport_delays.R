@@ -9,7 +9,9 @@ visualize_airport_delays <- function()
 
   flights <- nycflights13::flights
   airports <- nycflights13::airports
-
+  
+  #qyery to combine data
+  combine_data <- dplyr::left_join(flight, airport, by = c("dest" =  "faa"))
   
   
 }
