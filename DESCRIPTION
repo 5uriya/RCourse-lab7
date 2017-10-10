@@ -20,7 +20,6 @@ Suggests: testthat,
     magick,
     grid,
     tidyverse,
-    tidyr,
     nycflights13,
     dplyr
 VignetteBuilder: knitr
