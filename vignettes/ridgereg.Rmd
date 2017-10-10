@@ -1,0 +1,171 @@
+---
+title: "Implementation of Ridge Regression as extension of `linreg` "
+author: "Saman and Rabnawaz"
+header-includes:
+   - \usepackage{statPack}
+package: statPack
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+In this lab we have created a package to implement ridge regression for large covariates or multicollinear models. We will use linear algebra class to create the most basic functionality in the R package. We have also implement an `object oriented system` to handle special functions such as
+
+- print() 
+- predict()
+- coef() 
+
+
+## Ridge regression function: `ridgereg()`
+
+It take 3 parameter as input 
+
+'ridgereg(formula, data, lambda)' 
+
+1. *formula* (for example: `formula = Petal.Length ~ Species`)
+  left is dependent variable stored in variable in `Y` and right is independent Variable which is stored as matrix in `X`
+2. *data* a default data frame is load from R (for example `data = iris or faithful`)
+3. *lambda* a numeric value used to determine the best model
+
+## Calculate the following different linear algebra functions:
+
+1. **Regression coefficients** (`beta_ridge`) : $\hat{\beta}^{ridge}= (X^TX + {\lambda}I)^{-1}X^Ty$
+
+2. **The fitted values** (`y_hat`) : $\hat{y}= X\hat{\beta}^{ridge}$
+
+
+
+```{r, echo=FALSE , results= "hide"}
+
+ridgereg <- setRefClass("ridgereg", 
+                        fields = list(formula="formula",data="data.frame",
+                                      lambda="numeric",datasetName="character", 
+                                      beta_ridge="matrix", y_hat = "numeric",
+                                      ridge_coef="numeric"),
+                        methods = list(
+                          initialize= function(formula,data,lambda = 0, normalize = FALSE)
+                          {
+                            "This function acts as constructor"
+                            
+                            formula <<- formula #formula assign to class formula variable
+                            data <<- data #data assign to class data variable
+                            lambda <<- lambda #lambda 
+                            
+                            X <- model.matrix(formula,data)
+                            Y <- data[[(all.vars(formula)[1])]]
+                            
+                            #normalize the data if normiliz param is TRUE
+                            if(normalize == TRUE)
+                              for(i in 2:ncol(X))
+                                X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
+                      
+                            I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X)) #create a identity Matrix
+                            diag(I_mat) <- sqrt(lambda) #update diagnal of lambda matrix of I_mat
+                            mat_Y <- as.matrix(Y) #convert into martix
+                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% mat_Y ) #calculate beta Ridge
+      
+                            y_hat <<- as.numeric(X %*% beta_ridge)    #y_hat calculate
+                            
+                            ridge_coef <<- as.numeric(beta_ridge)
+                            names(ridge_coef) <<- rownames(beta_ridge)
+                            #extract dataset name 
+                            datasetName <<-  deparse(substitute(data))  
+    
+                          },
+                          predict =  function()
+                          {
+                            "This function returns the vector of calculated fitted values"
+                            return(y_hat)
+                          },
+                          coef = function()
+                          {
+                            "This function returns the vector of beta coefficients  "
+                            return(ridge_coef)
+                          },
+                          
+                          print = function()
+                          {
+                            "This function prints the formula and dataset name as well as the calculated coefficients"
+                            r_name <- rownames(as.data.frame(ridge_coef))
+                            cat("Call:")
+                            cat("\n")
+                            formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",datasetName,")",sep="")
+                            cat(formula_print)
+                            cat("\n")
+                            cat("\n")
+                            cat("Coefficients:")
+                            cat("\n")
+                            cat(" ")
+                            cat(r_name)
+                            cat(" ")
+                            cat("\n")
+                            cat(ridge_coef)
+                            cat("\n")
+                            cat("\n")
+
+                          }
+                          
+                          
+                         )
+                        ) 
+
+data(iris)                        
+a<-ridgereg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)
+
+```
+
+## Load Data Set
+```{r}
+data("iris")
+```
+
+
+## Initialization of class Object
+```{r, eval = FALSE}
+formula <-  Petal.Length ~ Species
+data <- iris
+a <- ridgereg(formula , data, lambda)
+a
+# a is an object 
+```
+
+
+## 'predict()'
+
+```{r}
+a$predict() #return the predicted values yhat
+```
+
+
+## 'coef()'
+
+```{r}
+a$coef() #return the coefficients as a named vector.
+```
+
+## 'print()'
+It should print out the `coefficients and coefficient names`, similar as done by the `print(lm(Petal.Length~Species, data = iris))` class.
+
+```{r}
+a$print()
+```
+
+
+
+
+
+
+
+
+
+
+## `Repo link`
+
+> "Here you can find a private repo link which will be public soon"
+([Rcourse-Lab7](https://github.com/rjkhan/RCourse-lab7))
+
+#### query
+`rabnsh696@student.liu.se` or `samza595@student.liu.se` 
