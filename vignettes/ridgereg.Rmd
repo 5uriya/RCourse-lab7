@@ -154,8 +154,6 @@ a$print()
 ```
 
 ```{r}
-require(caret)
-
 
 
 ```
