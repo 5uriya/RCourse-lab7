@@ -1,15 +1,16 @@
+#'See flight visualization and airport on graph plot
+#'
 #'@title Visualize ariport Flight delays
 #'@description In this you can see that which flight is delay at what is its mean by its lat lng
-#' 
 #'@examples
-#' visualize_airport_delays()
-#' @export 
+#'visualize_airport_delays()
+#'@export 
 
 visualize_airport_delays <- function()
 {
-
+  requireNamespace("tidyverse")
   requireNamespace("nycflights13")
-  
+  requireNamespace("dplyr")
   
   data(flights)
   data(airports)

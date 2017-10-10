@@ -9,6 +9,9 @@ visualize_airport_delays()
 \description{
 In this you can see that which flight is delay at what is its mean by its lat lng
 }
+\details{
+See flight visualization and airport on graph plot
+}
 \examples{
 visualize_airport_delays()
 }
