@@ -22,14 +22,12 @@ plot(ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris))}
 \section{Methods}{
 
 \describe{
-\item{\code{coeff()}}{Returns a named vector of the regression coefficients in the linear model.}
+\item{\code{coef()}}{This function returns the vector of beta coefficients}
 
-\item{\code{initialize(formula, data, lambda)}}{From inputs formula and data, generates all the other fields upon object initialization.}
+\item{\code{initialize(formula, data, lambda = 0, normalize = FALSE)}}{This function acts as constructor}
 
-\item{\code{predict(newframe = NULL)}}{Returns the predicted values of the linear model. Can also take a new NAMED data.frame
-with covariate values and make new prediction based on them. New NAMED data frame must have same
-column order as the data frame in field data.}
+\item{\code{predict()}}{This function returns the vector of calculated fitted values}
 
-\item{\code{print()}}{Gives a printout of the call as well as the calculated regression coefficients.}
+\item{\code{print()}}{This function prints the formula and dataset name as well as the calculated coefficients}
 }}
 
