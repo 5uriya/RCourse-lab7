@@ -3,37 +3,23 @@ library(mlbench)
 
 data("BostonHousing")
 boston_data<-BostonHousing
-print(data)
 
-dim(data)
+# indexes = sample(1:nrow(boston_data),size = 0.4*nrow(boston_data)) #randomly separating 40% of data by index
 
-indexes = sample(1:nrow(boston_data),size = 0.4*nrow(boston_data)) #randomly separating 40% of data by index
-
-# #indexes = createDataPartition(boston_data$rm, p = .4, 
-#                     list = FALSE, 
-#                     times = 1)
+indexes = createDataPartition(boston_data$rm, p = .75, list = FALSE, times = 1)
 
 
-test_set<- boston_data[indexes,] #assigninng 40% data to test
-training<- boston_data[-indexes,]  #assigning remaining 60% data to training set
+training<- boston_data[indexes,] #assigninng 75% data to test
+testing<- boston_data[-indexes,]  #assigning remaining 25% data to training set
 
 set.seed(12345)
+ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
 
-#
+set.seed(12345)
+ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
 
-ridgereg_fit <- train(rm ~ ., data = boston_data, 
-                 method = "lm"
-                 )
+#evalute leapForward and linear regiression 
 
-lm <- summary(ridgereg_fit)
-lm$coefficients
-
-
-ridgereg_forward_fit <- train(rm ~ ., data = boston_data, 
-                      method = "leapForward")
-
-lm_forward <- summary(ridgereg_forward_fit)
-lm_forward$which
 
 
 # fitControl <- trainControl(## 10-fold CV
