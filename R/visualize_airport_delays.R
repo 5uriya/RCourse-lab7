@@ -6,8 +6,8 @@
 
 visualize_airport_delays <- function() 
 {
-  requireNamespace("nycflights13")
-  requireNamespace("dplyr")
+  library(nycflights13)
+   
   library(dplyr)
   library(ggplot2)
   flights <- nycflights13::flights
