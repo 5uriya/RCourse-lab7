@@ -223,7 +223,7 @@ l
 l$resid() #return the vector of residuals e.
 ```
 
-## 'pred()'
+## `pred()`
 
 
 ```{r}
@@ -249,8 +249,6 @@ It should print out the `coefficients and coefficient names`, similar as done by
 ```{r}
 l$print()
 ```
-
-
 
 ## `plot()`
 plot the graph using `ggplot2` 

@@ -153,6 +153,12 @@ It should print out the `coefficients and coefficient names`, similar as done by
 a$print()
 ```
 
+```{r}
+require(caret)
+
+
+
+```
 
 
 
