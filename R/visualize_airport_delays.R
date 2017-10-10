@@ -8,10 +8,13 @@
 
 visualize_airport_delays <- function()
 {
-  requireNamespace("tidyverse")
-  requireNamespace("nycflights13")
-  requireNamespace("dplyr")
-  
+  # requireNamespace("tidyverse")
+  # requireNamespace("nycflights13")
+  # requireNamespace("dplyr")
+  # 
+  library(tidyr)
+  library(nycflights13)
+  library(dplyr)
   data(flights)
   data(airports)
   
