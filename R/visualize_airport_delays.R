@@ -8,25 +8,20 @@ visualize_airport_delays <- function()
 {
 
   flights <- nycflights13::flights
+  flights <- na.omit(flights)
   airports <- nycflights13::airports
   
-  #qyery to combine data
-  combine_data <- dplyr::left_join(flights, airports, by = c("dest" =  "faa"))
+
   #group_by data by dest
   library(dplyr)
-  group_data <- combine_data %>%  group_by(dest)
-  #mean of arr_delay
-  flight_delay_mean <- group_data %>% summarise('arr_delay_mean' = mean( arr_delay, na.rm = TRUE)) 
+  combine_data <- inner_join(flights, airports, by = c("dest" =  "faa"))
+  flights <- summarise(group_by(flights, dest), M = mean(arr_delay))
   
-  #get lat and lng 
-  lat_lng <- group_data %>% summarise("cord" = sprintf("lat= %s lon = %s" , lat[1], lon[1]))
-  
-  
-  data_frame <- data.frame(flight_delay_mean,lat_lng[,2])
- 
-  p<- ggplot(data_frame, aes(x = dest, y = arr_delay_mean, label = cord)) + 
-    geom_point() 
-  return(p)
+  # data_frame <- data.frame(flight_delay_mean,lat_lng[,2])
+  # library(ggplot2)
+  # p<- ggplot(data_frame, aes(x = dest, y = arr_delay_mean, label = cord)) + 
+  #   geom_point() 
+  # return(p)
   
 }
 
