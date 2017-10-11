@@ -1,8 +1,7 @@
-## ----message=FALSE,echo=FALSE--------------------------------------------
+## ----message=FALSE-------------------------------------------------------
 library(statPack)
 library(caret)
 library(mlbench)
-library(leaps)
 
 data("BostonHousing") #load a data 
 boston_data<-BostonHousing #set a data to variable
