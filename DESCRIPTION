@@ -19,5 +19,7 @@ Suggests: testthat, knitr,
     magick,
     grid,
     nycflights13,
-    dplyr
+    dplyr,
+    caret,
+    mlbench
 VignetteBuilder: knitr
