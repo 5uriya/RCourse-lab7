@@ -90,18 +90,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(statPack)
-<span class="kw">library</span>(caret) </code></pre></div>
-<pre><code>## Loading required package: lattice</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlbench)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(lattice)
-
-<span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
-boston_data&lt;-BostonHousing <span class="co">#set a data to variable</span>
-indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data$rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
-training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
-testing&lt;-<span class="st"> </span>boston_data[-indexes,]  <span class="co">#assigning remaining 30% data to training set</span></code></pre></div>
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
@@ -120,8 +108,8 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<sp
 ## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
 ## Resampling results:
 ## 
-##   RMSE       Rsquared  MAE      
-##   0.4563161  0.548973  0.3119393
+##   RMSE       Rsquared   MAE      
+##   0.4374205  0.5684049  0.3028842
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
@@ -138,9 +126,9 @@ ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.4726390  0.5146643  0.3368552
-##   3      0.4592072  0.5416963  0.3271063
-##   4      0.4569324  0.5458238  0.3194448
+##   2      0.4429707  0.5474861  0.3205515
+##   3      0.4292036  0.5762753  0.3105744
+##   4      0.4284561  0.5789367  0.3058196
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>

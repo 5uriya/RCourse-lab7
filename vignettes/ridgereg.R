@@ -1,9 +1,8 @@
-## ------------------------------------------------------------------------
+## ----message=FALSE,echo=FALSE--------------------------------------------
 library(statPack)
-library(caret) 
+library(caret)
 library(mlbench)
-library(ggplot2)
-library(lattice)
+library(leaps)
 
 data("BostonHousing") #load a data 
 boston_data<-BostonHousing #set a data to variable
