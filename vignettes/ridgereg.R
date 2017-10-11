@@ -1,7 +1,7 @@
 ## ------------------------------------------------------------------------
 library(statPack)
-library(caret) 
-library(mlbench)
+require(caret) 
+require(mlbench)
 
 data("BostonHousing") #load a data 
 boston_data<-BostonHousing #set a data to variable
