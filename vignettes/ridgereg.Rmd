@@ -42,6 +42,8 @@ testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 
 ### Fit a linear regression model and a linear regression model with forward selection
 ```{r}
+library(caret) 
+library(mlbench)
 set.seed(12345)
 ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
 # summary(ridgereg_fit)

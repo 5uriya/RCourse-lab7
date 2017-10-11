@@ -101,7 +101,9 @@ testing&lt;-<span class="st"> </span>boston_data[-indexes,]  <span class="co">#a
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret) 
+<span class="kw">library</span>(mlbench)
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
 ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
 <span class="co"># summary(ridgereg_fit)</span>
 <span class="kw">print</span>(ridgereg_fit)</code></pre></div>
@@ -116,7 +118,7 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<sp
 ## Resampling results:
 ## 
 ##   RMSE       Rsquared   MAE      
-##   0.5286239  0.4308089  0.3541051
+##   0.4717949  0.5421708  0.3230496
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
@@ -133,9 +135,9 @@ ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5375114  0.4128172  0.3773162
-##   3      0.5365755  0.4151114  0.3697876
-##   4      0.5327313  0.4219701  0.3614709
+##   2      0.4903756  0.5060469  0.3490307
+##   3      0.4799528  0.5276527  0.3374301
+##   4      0.4754624  0.5366108  0.3301791
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>
