@@ -91,12 +91,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(statPack)
-<span class="kw">require</span>(caret) </code></pre></div>
-<pre><code>## Loading required package: caret</code></pre>
+<span class="kw">library</span>(caret) </code></pre></div>
 <pre><code>## Loading required package: lattice</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(mlbench)</code></pre></div>
-<pre><code>## Loading required package: mlbench</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlbench)
+
+<span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
 boston_data&lt;-BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data$rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
 training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
@@ -104,8 +103,9 @@ testing&lt;-<span class="st"> </span>boston_data[-indexes,]  <span class="co">#a
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(rm ~<span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
 <span class="co"># summary(ridgereg_fit)</span>
 <span class="kw">print</span>(ridgereg_fit)</code></pre></div>
 <pre><code>## Linear Regression 
@@ -119,11 +119,11 @@ ridgereg_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(
 ## Resampling results:
 ## 
 ##   RMSE       Rsquared   MAE      
-##   0.5088539  0.5041925  0.3315021
+##   0.5357862  0.4628333  0.3377992
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_forward_fit &lt;-caret::<span class="kw">train</span>(rm ~<span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
+ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
 <span class="kw">print</span>(ridgereg_forward_fit)</code></pre></div>
 <pre><code>## Linear Regression with Forward Selection 
 ## 
@@ -136,12 +136,12 @@ ridgereg_forward_fit &lt;-caret::<span class="kw">train</span>(rm ~<span class="
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5201795  0.4789082  0.3513066
-##   3      0.5110712  0.4978389  0.3417090
-##   4      0.5078842  0.5034173  0.3355613
+##   2      0.5386694  0.4483988  0.3589935
+##   3      0.5358025  0.4564539  0.3510507
+##   4      0.5382215  0.4545383  0.3473708
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 4.</code></pre>
+## The final value used for the model was nvmax = 3.</code></pre>
 <p>Also a quote using <code>&gt;</code>:</p>
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
