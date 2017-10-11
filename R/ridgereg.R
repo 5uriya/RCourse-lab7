@@ -87,9 +87,3 @@ ridgereg <- setRefClass("ridgereg",
                           
                          )
                         ) 
-
-# 
-# a<- ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris, lambda= 2.6)
-# a$coef()
-# lm.r<- lm.ridge(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris, lambda= 2.6)
-# lm.r$coef

@@ -13,8 +13,7 @@ visualize_airport_delays <- function()
   
   
   #group_by data by dest
-  library(dplyr)
-  library(ggplot2)
+
   
   #qyery to combine data
   # combine_data <- inner_join(airports, flights, by = c ("faa"= "dest"))
@@ -22,8 +21,8 @@ visualize_airport_delays <- function()
   # flight_delay_mean <- group_data %>% summarise('arr_delay_mean' = mean( arr_delay))
   # 
   
-  mean_data <- summarise(group_by(flights, dest), M = mean(arr_delay))
-  combine_data <- inner_join(airports,mean_data, by = c("faa" =  "dest"))
+  mean_data <- dplyr::summarise(dplyr::group_by(flights, dest), M = mean(arr_delay))
+  combine_data <- dplyr::inner_join(airports,mean_data, by = c("faa" =  "dest"))
   
     ggplot2::ggplot(combine_data, ggplot2::aes(x=combine_data$lat, y=combine_data$lon)) +
     ggplot2::geom_point(ggplot2::aes(color=combine_data$M), size=3) +
