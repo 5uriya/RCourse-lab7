@@ -12,12 +12,12 @@ training<- boston_data[indexes,] #assigninng 70% data to test
 testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 
 ## ------------------------------------------------------------------------
-# library(caret)
-# set.seed(12345)
-# ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
-# # summary(ridgereg_fit)
-# print(ridgereg_fit)
-# set.seed(12345)
-# ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
-# print(ridgereg_forward_fit)
+library(caret)
+set.seed(12345)
+ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
+# summary(ridgereg_fit)
+print(ridgereg_fit)
+set.seed(12345)
+ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
+print(ridgereg_forward_fit)
 
