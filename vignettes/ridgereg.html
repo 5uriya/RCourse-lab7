@@ -91,10 +91,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(statPack)
-<span class="kw">require</span>(caret)</code></pre></div>
-<pre><code>## Loading required package: caret</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlbench)
+<span class="kw">library</span>(caret)
+<span class="kw">library</span>(mlbench)
 <span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
 boston_data&lt;-BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data$rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
@@ -118,8 +116,8 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<sp
 ## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
 ## Resampling results:
 ## 
-##   RMSE      Rsquared   MAE      
-##   0.527201  0.4397733  0.3466856
+##   RMSE       Rsquared  MAE      
+##   0.5014879  0.526902  0.3292546
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
@@ -136,12 +134,12 @@ ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5244553  0.4379376  0.3568864
-##   3      0.5150119  0.4573184  0.3496136
-##   4      0.5202488  0.4492035  0.3488789
+##   2      0.5004109  0.5223267  0.3434977
+##   3      0.4931511  0.5362379  0.3383768
+##   4      0.4895058  0.5442577  0.3283514
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 3.</code></pre>
+## The final value used for the model was nvmax = 4.</code></pre>
 <p>Also a quote using <code>&gt;</code>:</p>
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
