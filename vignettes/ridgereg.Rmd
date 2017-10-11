@@ -30,31 +30,39 @@ http://topepo.github.io/caret/training.html.
 ments.
 
 ### Divide the BostonHousing data
-```{r}
+```{r, echo=FALSE , results= "hide"}
 library(statPack)
 library(caret)
-citation("ecospat")
-library(mlbench)
-library(ggplot2)
 library(lattice)
+require(ggplot2)
+library(mlbench)
+```
+```{r}
 
 data("BostonHousing") #load a data 
-boston_data<-BostonHousing #set a data to variable
-indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
+boston_data <- BostonHousing #set a data to variable
+indexes = caret::createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
 training<- boston_data[indexes,] #assigninng 70% data to test
 testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
+
+set.seed(12345)
+ridgereg_fit <- caret::train(rm ~ . , data = training, method = "lm")
+# summary(ridgereg_fit)
+print(ridgereg_fit)
+ridgereg_forward_fit <- caret::train(rm ~ ., data = training, method = "leapForward")
+print(ridgereg_forward_fit)
 ```
+
 
 ### Fit a linear regression model and a linear regression model with forward selection
 ```{r}
-library(caret)
-set.seed(12345)
-ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
-# summary(ridgereg_fit)
-print(ridgereg_fit)
-set.seed(12345)
-ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
-print(ridgereg_forward_fit)
+# set.seed(12345)
+# ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
+# # summary(ridgereg_fit)
+# print(ridgereg_fit)
+# set.seed(12345)
+# ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
+# print(ridgereg_forward_fit)
 ```
 
 Also a quote using `>`:

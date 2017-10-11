@@ -149,4 +149,3 @@ linreg <- setRefClass("linreg",
 
 
         )
-
