@@ -27,19 +27,26 @@ ridgereg <- setRefClass("ridgereg",
                             Y <- data[[(all.vars(formula)[1])]]
                             
                             #normalize the data if normiliz param is TRUE
-                            if(normalize == TRUE)
                               for(i in 2:ncol(X))
                                 X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
-                      
+  
+                            #Qr decompistion
+                            QR_X <- qr(X)
+                            QR_R <- qr.R(QR_X)
+                          
                             I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X)) #create a identity Matrix
-                            diag(I_mat) <- sqrt(lambda) #update diagnal of lambda matrix of I_mat
+                            diag(I_mat) <- lambda #update diagnal of lambda matrix of I_mat
                             mat_Y <- as.matrix(Y) #convert into martix
-                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% mat_Y ) #calculate beta Ridge
+                            beta_ridge <<- solve(( (t(QR_R) %*% QR_R) + I_mat)) %*% (t(X) %*% mat_Y )
+                            
+          
       
                             y_hat <<- as.numeric(X %*% beta_ridge)    #y_hat calculate
                             
-                            ridge_coef <<- as.numeric(beta_ridge)
-                            names(ridge_coef) <<- rownames(beta_ridge)
+                            ridge_t <- as.numeric(beta_ridge)
+                            names(ridge_t) <- rownames(beta_ridge)
+                            
+                            ridge_coef <<- ridge_t[-1]
                             #extract dataset name 
                             datasetName <<-  deparse(substitute(data))  
     
@@ -80,3 +87,9 @@ ridgereg <- setRefClass("ridgereg",
                           
                          )
                         ) 
+
+# 
+# a<- ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris, lambda= 2.6)
+# a$coef()
+# lm.r<- lm.ridge(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris, lambda= 2.6)
+# lm.r$coef
