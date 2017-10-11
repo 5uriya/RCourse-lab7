@@ -30,11 +30,11 @@ http://topepo.github.io/caret/training.html.
 ments.
 
 ### Divide the BostonHousing data
-```{r}
+```{r, echo=FALSE , results= "hide"}
 library(statPack)
 library(caret)
 library(lattice)
-library(ggplot2)
+require(ggplot2)
 library(mlbench)
 ```
 ```{r}

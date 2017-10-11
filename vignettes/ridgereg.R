@@ -1,8 +1,8 @@
-## ------------------------------------------------------------------------
+## ---- echo=FALSE , results= "hide"---------------------------------------
 library(statPack)
 library(caret)
 library(lattice)
-library(ggplot2)
+require(ggplot2)
 library(mlbench)
 
 ## ------------------------------------------------------------------------

@@ -90,12 +90,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(statPack)
-<span class="kw">library</span>(caret)</code></pre></div>
-<pre><code>## Loading required package: lattice</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lattice)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(mlbench)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
 boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span>caret::<span class="kw">createDataPartition</span>(boston_data$rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
@@ -116,8 +110,8 @@ ridgereg_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(
 ## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
 ## Resampling results:
 ## 
-##   RMSE      Rsquared   MAE     
-##   0.481142  0.5531608  0.322478
+##   RMSE      Rsquared   MAE      
+##   0.473852  0.5301727  0.3096486
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(rm ~<span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
@@ -133,12 +127,12 @@ ridgereg_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5090883  0.5184592  0.3414345
-##   3      0.5053960  0.5262397  0.3421442
-##   4      0.4974754  0.5401047  0.3323133
+##   2      0.5037138  0.4736281  0.3438588
+##   3      0.4910347  0.5015015  0.3330924
+##   4      0.4913898  0.5024089  0.3291138
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 4.</code></pre>
+## The final value used for the model was nvmax = 3.</code></pre>
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
