@@ -1,5 +1,12 @@
 ## ------------------------------------------------------------------------
+library(statPack)
+library(caret)
+library(lattice)
+library(ggplot2)
 library(mlbench)
+
+## ------------------------------------------------------------------------
+
 data("BostonHousing") #load a data 
 boston_data <- BostonHousing #set a data to variable
 indexes = caret::createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
@@ -10,7 +17,6 @@ set.seed(12345)
 ridgereg_fit <- caret::train(rm ~ . , data = training, method = "lm")
 # summary(ridgereg_fit)
 print(ridgereg_fit)
-set.seed(12345)
 ridgereg_forward_fit <- caret::train(rm ~ ., data = training, method = "leapForward")
 print(ridgereg_forward_fit)
 
