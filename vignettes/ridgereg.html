@@ -103,45 +103,14 @@ testing&lt;-<span class="st"> </span>boston_data[-indexes,]  <span class="co">#a
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caret)
-<span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
-<span class="co"># summary(ridgereg_fit)</span>
-<span class="kw">print</span>(ridgereg_fit)</code></pre></div>
-<pre><code>## Linear Regression 
-## 
-## 356 samples
-##  13 predictor
-## 
-## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
-## Resampling results:
-## 
-##   RMSE       Rsquared   MAE      
-##   0.5357862  0.4628333  0.3377992
-## 
-## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm ~<span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
-<span class="kw">print</span>(ridgereg_forward_fit)</code></pre></div>
-<pre><code>## Linear Regression with Forward Selection 
-## 
-## 356 samples
-##  13 predictor
-## 
-## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
-## Resampling results across tuning parameters:
-## 
-##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5386694  0.4483988  0.3589935
-##   3      0.5358025  0.4564539  0.3510507
-##   4      0.5382215  0.4545383  0.3473708
-## 
-## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 3.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(caret)</span>
+<span class="co"># set.seed(12345)</span>
+<span class="co"># ridgereg_fit &lt;- train(rm ~ . , data = training, method = &quot;lm&quot;)</span>
+<span class="co"># # summary(ridgereg_fit)</span>
+<span class="co"># print(ridgereg_fit)</span>
+<span class="co"># set.seed(12345)</span>
+<span class="co"># ridgereg_forward_fit &lt;- train(rm ~ ., data = training, method = &quot;leapForward&quot;)</span>
+<span class="co"># print(ridgereg_forward_fit)</span></code></pre></div>
 <p>Also a quote using <code>&gt;</code>:</p>
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
