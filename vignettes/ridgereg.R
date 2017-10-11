@@ -1,8 +1,7 @@
-## ----message=FALSE-------------------------------------------------------
+## ------------------------------------------------------------------------
 library(statPack)
-library(caret)
+require(caret)
 library(mlbench)
-
 data("BostonHousing") #load a data 
 boston_data<-BostonHousing #set a data to variable
 indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
