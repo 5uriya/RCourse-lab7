@@ -12,7 +12,7 @@
 
 <meta name="author" content="Saman and Rabnawaz" />
 
-<meta name="date" content="2017-10-11" />
+<meta name="date" content="2017-10-12" />
 
 <title>Implementation of ridreg regression Class ridreg</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Implementation of ridreg regression Class <code>ridreg</code></h1>
 <h4 class="author"><em>Saman and Rabnawaz</em></h4>
-<h4 class="date"><em>2017-10-11</em></h4>
+<h4 class="date"><em>2017-10-12</em></h4>
 
 
 
@@ -90,49 +90,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data </span>
-boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
-indexes =<span class="st"> </span>caret::<span class="kw">createDataPartition</span>(boston_data$rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
-training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
-testing&lt;-<span class="st"> </span>boston_data[-indexes,]  <span class="co">#assigning remaining 30% data to training set</span>
-
-<span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(rm ~<span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
-<span class="co"># summary(ridgereg_fit)</span>
-<span class="kw">print</span>(ridgereg_fit)</code></pre></div>
-<pre><code>## Linear Regression 
-## 
-## 356 samples
-##  13 predictor
-## 
-## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
-## Resampling results:
-## 
-##   RMSE      Rsquared   MAE      
-##   0.473852  0.5301727  0.3096486
-## 
-## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span>caret::<span class="kw">train</span>(rm ~<span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
-<span class="kw">print</span>(ridgereg_forward_fit)</code></pre></div>
-<pre><code>## Linear Regression with Forward Selection 
-## 
-## 356 samples
-##  13 predictor
-## 
-## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
-## Resampling results across tuning parameters:
-## 
-##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5037138  0.4736281  0.3438588
-##   3      0.4910347  0.5015015  0.3330924
-##   4      0.4913898  0.5024089  0.3291138
-## 
-## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 3.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data(&quot;BostonHousing&quot;) #load a data </span>
+<span class="co"># boston_data &lt;- BostonHousing #set a data to variable</span>
+<span class="co"># indexes = caret::createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)</span>
+<span class="co"># training&lt;- boston_data[indexes,] #assigninng 70% data to test</span>
+<span class="co"># testing&lt;- boston_data[-indexes,]  #assigning remaining 30% data to training set</span>
+<span class="co"># </span>
+<span class="co"># set.seed(12345)</span>
+<span class="co"># ridgereg_fit &lt;- caret::train(rm ~ . , data = training, method = &quot;lm&quot;)</span>
+<span class="co"># # summary(ridgereg_fit)</span>
+<span class="co"># print(ridgereg_fit)</span>
+<span class="co"># ridgereg_forward_fit &lt;- caret::train(rm ~ ., data = training, method = &quot;leapForward&quot;)</span>
+<span class="co"># print(ridgereg_forward_fit)</span></code></pre></div>
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
