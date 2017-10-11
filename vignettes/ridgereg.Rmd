@@ -1,5 +1,5 @@
 ---
-title: "Implementation of Linear regression Class `linreg` "
+title: "Implementation of ridreg regression Class `ridreg` "
 author: "Saman and Rabnawaz"
 header-includes:
    - \usepackage{statPack}
@@ -12,47 +12,43 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## Using the caret package and your ridgereg() function to create a predictive model for the BostonHousing data found in the mlbench package.
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## The Document should include the following:
+- Divide the BostonHousing data (or your own API data) into a test and training dataset using the
+caret package.
+- Fit a linear regression model and a linear regression model with forward selection of covariates on the training dataset. Information on linear regression models in the caret package can be found here http://topepo.github.io/caret/Linear Regression.html.
+- Evaluate the performance of this model on the training dataset.
+- Fit a ridge regression model using your ridgereg() function to the training dataset for different
+values of . How to include custom models in caret is described here
+http://topepo.github.io/caret/custom models.html.
+- Find the best hyperparameter value for  using 10-fold cross-validation on the training set. More
+information how to use the caret package for training can be found here
+https://cran.r-project.org/web/packages/caret/vignettes/caret.pdf and here
+http://topepo.github.io/caret/training.html.
+- Evaluate the performance of all three models on the test dataset and write some concluding com-
+ments.
 
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+### Divide the BostonHousing data
+```{r}
+library(caret) 
+library(mlbench)
+data("BostonHousing") #load a data 
+boston_data<-BostonHousing #set a data to variable
+indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
+training<- boston_data[indexes,] #assigninng 70% data to test
+testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+### Fit a linear regression model and a linear regression model with forward selection
+```{r}
+set.seed(12345)
+ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
+# summary(ridgereg_fit)
+print(ridgereg_fit)
+set.seed(12345)
+ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
+print(ridgereg_forward_fit)
 ```
 
 Also a quote using `>`:
