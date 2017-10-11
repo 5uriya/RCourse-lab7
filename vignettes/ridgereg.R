@@ -2,6 +2,8 @@
 library(statPack)
 library(caret) 
 library(mlbench)
+library(ggplot2)
+library(lattice)
 
 data("BostonHousing") #load a data 
 boston_data<-BostonHousing #set a data to variable
