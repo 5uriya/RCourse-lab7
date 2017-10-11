@@ -150,3 +150,4 @@ linreg <- setRefClass("linreg",
 
         )
 
+a<- linreg(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)

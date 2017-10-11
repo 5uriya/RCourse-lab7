@@ -12,8 +12,10 @@
 ridgereg <- setRefClass("ridgereg", 
                         fields = list(formula="formula",data="data.frame",
                                       lambda="numeric",datasetName="character", 
-                                      beta_ridge="matrix", y_hat = "numeric",
-                                      ridge_coef="numeric"),
+                                      beta_ridge="list", y_hat = "list",
+                                      char_lamb = "character",
+                                      beta_coff_numeric="list"
+                                      ),
                         methods = list(
                           initialize= function(formula,data,lambda = 0, normalize = FALSE)
                           {
@@ -31,18 +33,46 @@ ridgereg <- setRefClass("ridgereg",
                               for(i in 2:ncol(X))
                                 X[,i] <- ( X[,i] - mean(X[,i] )) / sd(X[,i] )
                       
-                            I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X)) #create a identity Matrix
-                            diag(I_mat) <- sqrt(lambda) #update diagnal of lambda matrix of I_mat
-                            mat_Y <- as.matrix(Y) #convert into martix
-                            beta_ridge <<- solve(( (t(X) %*% X) + I_mat)) %*% (t(X) %*% mat_Y ) #calculate beta Ridge
-      
-                            y_hat <<- as.numeric(X %*% beta_ridge)    #y_hat calculate
+                            #QR decompostion
+                            x_qr <- qr(X)
+                            QR_R <- qr.R(x_qr)
+                            ###################
+                            mat_Y <- as.matrix(Y)
+                            # tranpose_x <- t(X)
                             
-                            ridge_coef <<- as.numeric(beta_ridge)
-                            names(ridge_coef) <<- rownames(beta_ridge)
-                            #extract dataset name 
+                            #loop for lambda 
+                            for(k in 1:length(lambda))
+                            {
+                              I_mat <- matrix(c(0),nrow = ncol(X),ncol = ncol(X))
+                              diag(I_mat) <- lambda[k]
+                              beta_ridge_hat <- solve(( (t(QR_R) %*% QR_R) + I_mat)) %*% (t(X) %*% mat_Y )
+                              y_fit <- as.numeric(X %*% beta_ridge_hat)
+                            
+
+                              ridge_coef <- as.numeric(beta_ridge_hat)
+                              beta_coff_numeric[[k]] <<- ridge_coef
+                              names(ridge_coef) <- rownames(beta_ridge_hat)
+                              beta_ridge[[k]] <<- ridge_coef #assign values to class variable
+                              y_hat[[k]] <<- y_fit #assign values to class variable  
+                            }
+                            
+                            # y_hat <<- tmp_fit_list
+                            # beta_ridge <<- tmp_beta_list
+                            # ridge_coef <<- as.numeric(beta_ridge)
+                            # names(ridge_coef) <<- rownames(beta_ridge)
+                            # print(y_hat)
+                            # print(beta_ridge)
+                            # print(r_name)
+                            
+                            # y_hat <<- as.numeric(X %*% beta_ridge)    #y_hat calculate
+                            # 
+                            # ridge_coef <<- as.numeric(beta_ridge)
+                            # names(ridge_coef) <<- rownames(beta_ridge)
+                            # #extract dataset name 
                             datasetName <<-  deparse(substitute(data))  
-    
+                            char_lamb <<- deparse(substitute(lambda))  
+                            
+                
                           },
                           predict =  function()
                           {
@@ -52,26 +82,29 @@ ridgereg <- setRefClass("ridgereg",
                           coef = function()
                           {
                             "This function returns the vector of beta coefficients  "
-                            return(ridge_coef)
+                            return(beta_ridge)
                           },
-                          
                           print = function()
                           {
                             "This function prints the formula and dataset name as well as the calculated coefficients"
-                            r_name <- rownames(as.data.frame(ridge_coef))
+                            
+                            r_name <- c("",rownames(as.data.frame(beta_ridge)))
+                            langd_namn<-nchar(r_name)
+                            cat(langd_namn)
                             cat("Call:")
                             cat("\n")
-                            formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",datasetName,")",sep="")
+                            formula_print<- paste0("ridgereg(","formula = ",formula[2]," ",formula[1]," ",formula[3],", ","data = ",datasetName,",lambda = ", char_lamb,")",sep="")
                             cat(formula_print)
                             cat("\n")
                             cat("\n")
                             cat("Coefficients:")
                             cat("\n")
                             cat(" ")
-                            cat(r_name)
-                            cat(" ")
-                            cat("\n")
-                            cat(ridge_coef)
+                            cat(paste(r_name,collapse = "  "),sep="",collapse="\n")
+                            for(i in 1:length(beta_coff_numeric)){
+                              cat(paste(lambda[[i]],collapse = "  "),sep="",collapse="\t")
+                              cat(paste(round(beta_coff_numeric[[i]],5),collapse = "  "),sep="",collapse="\n")
+                            }
                             cat("\n")
                             cat("\n")
 
@@ -80,3 +113,4 @@ ridgereg <- setRefClass("ridgereg",
                           
                          )
                         ) 
+a<- ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data=iris, lambda= c(0.5,1))
