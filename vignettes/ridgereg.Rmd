@@ -32,7 +32,8 @@ ments.
 ### Divide the BostonHousing data
 ```{r}
 library(statPack)
-library(caret) 
+library(caret)
+citation("ecospat")
 library(mlbench)
 library(ggplot2)
 library(lattice)
