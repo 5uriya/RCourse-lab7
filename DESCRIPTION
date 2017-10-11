@@ -13,17 +13,14 @@ LazyData: true
 RoxygenNote: 6.0.1
 Depends: R (>= 2.10)
 Imports:
-    ggplot2,
-    caret,
-    mlbench
+    ggplot2
 Suggests: testthat, knitr,
     rmarkdown,
     magick,
+    caret,
     grid,
     nycflights13,
     dplyr,
-    caret,
     mlbench,
-    lattice,
-    ggplot2
+    lattice
 VignetteBuilder: knitr
