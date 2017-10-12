@@ -2,18 +2,21 @@
 % Please edit documentation in R/linreg.R
 \name{linreg}
 \alias{linreg}
-\title{A RC class for multiple linear regression}
+\title{Linear Regression}
 \description{
-A RC class for multiple linear regression
+RC class mainpluate linear algeric caluclautions giving formula and data.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{formula}}{The formula object containing depedent and independent variables}
+\item{\code{formula}}{Formula i.e Petal.Length~Sepal.Width+Sepal.Length}
 
-\item{\code{data}}{A data frame object to apply the multiple linear regression to
-
-a<-linreg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
-plot(linreg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris))}
+\item{\code{data}}{A data frame iris or faithfull}
 }}
 
+\examples{
+data(iris)
+linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$print()
+linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$pred()
+linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$summary()
+}

@@ -3,20 +3,16 @@
 \docType{class}
 \name{ridgereg}
 \alias{ridgereg}
-\title{A RC class for ridgereg regression}
+\title{Linear Regression}
 \description{
-A RC class for ridgereg regression
+RC class mainpluate linear algeric caluclautions giving formula and data.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{formula}}{The formula object containing depedent and independent variables}
+\item{\code{formula}}{Formula}
 
-\item{\code{data}}{A data frame object to apply the multiple linear regression to}
-
-\item{\code{lambda}}{numeric value which is default set as Zer0
-a<-ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
-plot(ridgereg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris))}
+\item{\code{data}}{A data frame}
 }}
 
 \section{Methods}{
