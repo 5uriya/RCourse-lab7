@@ -30,7 +30,7 @@ http://topepo.github.io/caret/training.html.
 ments.
 
 ### Divide the BostonHousing data
-```{r, echo=FALSE , results= "hide"}
+```{r, echo=TRUE , results= "hide", warning=FALSE , message=FALSE}
 library(mlbench)
 library(caret)
 library(statPack)
@@ -45,7 +45,6 @@ testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 ```{r}
 set.seed(12345)
 ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
-summary(ridgereg_fit)
 print(ridgereg_fit)
 ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
 print(ridgereg_forward_fit)
