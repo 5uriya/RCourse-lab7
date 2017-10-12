@@ -5,7 +5,7 @@ library(statPack)
 
 ## ------------------------------------------------------------------------
 data("BostonHousing") #load a data
-# boston_data <- BostonHousing #set a data to variable
+boston_data <- BostonHousing #set a data to variable
 # indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
 # training<- boston_data[indexes,] #assigninng 70% data to test
 # testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
