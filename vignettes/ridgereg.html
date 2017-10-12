@@ -95,12 +95,41 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
 training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
-testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span>
-
-<span class="co"># set.seed(12345)</span>
-<span class="co"># ridgereg_fit &lt;- train(rm ~ . , data = training, method = &quot;lm&quot;)</span>
-<span class="co"># # summary(ridgereg_fit)</span>
-<span class="co"># print(ridgereg_fit)</span>
+testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
+<span class="kw">summary</span>(ridgereg_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = .outcome ~ ., data = dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.89780 -0.20057  0.01441  0.20343  2.09240 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  6.2171375  0.5171564  12.022  &lt; 2e-16 ***
+## crim         0.0009527  0.0032297   0.295  0.76820    
+## zn           0.0024973  0.0015137   1.650  0.09991 .  
+## indus       -0.0157676  0.0066500  -2.371  0.01829 *  
+## chas1       -0.0335665  0.0961899  -0.349  0.72733    
+## nox         -0.2699395  0.4433789  -0.609  0.54305    
+## age          0.0059009  0.0014759   3.998 7.83e-05 ***
+## dis         -0.0178543  0.0235479  -0.758  0.44885    
+## rad          0.0177149  0.0079274   2.235  0.02609 *  
+## tax         -0.0001814  0.0004263  -0.426  0.67073    
+## ptratio     -0.0021800  0.0153649  -0.142  0.88726    
+## b           -0.0008519  0.0002924  -2.913  0.00381 ** 
+## lstat       -0.0416123  0.0059144  -7.036 1.09e-11 ***
+## medv         0.0359184  0.0047424   7.574 3.41e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4441 on 342 degrees of freedom
+## Multiple R-squared:  0.601,  Adjusted R-squared:  0.5858 
+## F-statistic: 39.63 on 13 and 342 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print(ridgereg_fit)</span>
 <span class="co"># ridgereg_forward_fit &lt;- train(rm ~ ., data = training, method = &quot;leapForward&quot;)</span>
 <span class="co"># print(ridgereg_forward_fit)</span></code></pre></div>
 </div>
