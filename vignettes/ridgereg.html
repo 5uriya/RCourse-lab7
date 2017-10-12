@@ -93,12 +93,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## Loading required package: lattice</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data</span>
 boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
-indexes =<span class="st"> </span>caret<span class="op">::</span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
+indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
 training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
 testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span>
 
 <span class="kw">set.seed</span>(<span class="dv">12345</span>)
-ridgereg_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
+ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
 <span class="co"># summary(ridgereg_fit)</span>
 <span class="kw">print</span>(ridgereg_fit)</code></pre></div>
 <pre><code>## Linear Regression 
@@ -112,10 +112,10 @@ ridgereg_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span 
 ## Resampling results:
 ## 
 ##   RMSE       Rsquared   MAE      
-##   0.4579343  0.5830798  0.3044445
+##   0.4692418  0.5883622  0.3195534
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
 <span class="kw">print</span>(ridgereg_forward_fit)</code></pre></div>
 <pre><code>## Linear Regression with Forward Selection 
 ## 
@@ -128,9 +128,9 @@ ridgereg_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span 
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.4911673  0.5302393  0.3342719
-##   3      0.4851782  0.5431060  0.3321766
-##   4      0.4699667  0.5710428  0.3159044
+##   2      0.5055838  0.4945721  0.3479654
+##   3      0.4868194  0.5326247  0.3346103
+##   4      0.4775320  0.5514689  0.3189974
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>
