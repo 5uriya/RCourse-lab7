@@ -90,18 +90,50 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="divide-the-bostonhousing-data" class="section level3">
 <h3>Divide the BostonHousing data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data(&quot;BostonHousing&quot;) #load a data </span>
-<span class="co"># boston_data &lt;- BostonHousing #set a data to variable</span>
-<span class="co"># indexes = caret::createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)</span>
-<span class="co"># training&lt;- boston_data[indexes,] #assigninng 70% data to test</span>
-<span class="co"># testing&lt;- boston_data[-indexes,]  #assigning remaining 30% data to training set</span>
-<span class="co"># </span>
-<span class="co"># set.seed(12345)</span>
-<span class="co"># ridgereg_fit &lt;- caret::train(rm ~ . , data = training, method = &quot;lm&quot;)</span>
-<span class="co"># # summary(ridgereg_fit)</span>
-<span class="co"># print(ridgereg_fit)</span>
-<span class="co"># ridgereg_forward_fit &lt;- caret::train(rm ~ ., data = training, method = &quot;leapForward&quot;)</span>
-<span class="co"># print(ridgereg_forward_fit)</span></code></pre></div>
+<pre><code>## Loading required package: lattice</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data</span>
+boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
+indexes =<span class="st"> </span>caret<span class="op">::</span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
+training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
+testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span>
+
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+ridgereg_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
+<span class="co"># summary(ridgereg_fit)</span>
+<span class="kw">print</span>(ridgereg_fit)</code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 356 samples
+##  13 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
+## Resampling results:
+## 
+##   RMSE       Rsquared   MAE      
+##   0.4579343  0.5830798  0.3044445
+## 
+## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span>caret<span class="op">::</span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
+<span class="kw">print</span>(ridgereg_forward_fit)</code></pre></div>
+<pre><code>## Linear Regression with Forward Selection 
+## 
+## 356 samples
+##  13 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
+## Resampling results across tuning parameters:
+## 
+##   nvmax  RMSE       Rsquared   MAE      
+##   2      0.4911673  0.5302393  0.3342719
+##   3      0.4851782  0.5431060  0.3321766
+##   4      0.4699667  0.5710428  0.3159044
+## 
+## RMSE was used to select the optimal model using  the smallest value.
+## The final value used for the model was nvmax = 4.</code></pre>
 </div>
 <div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
 <h3>Fit a linear regression model and a linear regression model with forward selection</h3>
