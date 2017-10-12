@@ -1,13 +1,16 @@
-#'A RC class for multiple linear regression
-#'
-#'@field formula The formula object containing depedent and independent variables
-#'@field data A data frame object to apply the multiple linear regression to
-#'
-#'a<-linreg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris)
-#'plot(linreg$new(formula=Petal.Length ~ Sepal.Width + Sepal.Length,data=iris))
-#'@name linreg
-#'@exportClass linreg
-#'@export linreg
+#' @title Linear Regression
+#' @description RC class mainpluate linear algeric caluclautions giving formula and data.
+#' @field formula Formula i.e Petal.Length~Sepal.Width+Sepal.Length
+#' @field data A data frame iris or faithfull
+#' @examples
+#' data(iris)
+#' linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$print()
+#' linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$pred()
+#' linreg$new(Petal.Length~Sepal.Width+Sepal.Length, data=iris)$summary()
+#' @name linreg
+#' @export linreg
+#' @exportClass linreg
+
 require(ggplot2)
 
 linreg <- setRefClass("linreg",
