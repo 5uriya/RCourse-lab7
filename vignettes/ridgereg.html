@@ -94,8 +94,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data</span>
 boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
-<span class="co"># training&lt;- boston_data[indexes,] #assigninng 70% data to test</span>
-<span class="co"># testing&lt;- boston_data[-indexes,]  #assigning remaining 30% data to training set</span>
+training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
+testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span>
 
 <span class="co"># set.seed(12345)</span>
 <span class="co"># ridgereg_fit &lt;- train(rm ~ . , data = training, method = &quot;lm&quot;)</span>

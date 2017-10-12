@@ -21,5 +21,5 @@ Suggests: testthat, knitr,ggplot2,
     nycflights13,
     dplyr,
     mlbench,
-    caret,lattice
+    caret,leaps
 VignetteBuilder: knitr
