@@ -1,2 +1,4 @@
 language: r
 cache: packages
+before_install:
+  - Rscript -e 'if(!"caret" %in% rownames(installed.packages())) { install.packages("caret", dependencies = TRUE) }'

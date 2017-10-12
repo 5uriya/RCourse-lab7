@@ -31,11 +31,9 @@ ments.
 
 ### Divide the BostonHousing data
 ```{r, echo=FALSE , results= "hide"}
-# library(statPack)
-# library(caret)
-# library(lattice)
-# require(ggplot2)
-# library(mlbench)
+library(mlbench)
+library(caret)
+library(statPack)
 ```
 ```{r}
 
