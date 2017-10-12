@@ -6,7 +6,7 @@
 
 visualize_airport_delays <- function()
 {
-
+  require(nycflights13)
   flights <- nycflights13::flights
   flights <- stats::na.omit(flights)
   airports <- nycflights13::airports
