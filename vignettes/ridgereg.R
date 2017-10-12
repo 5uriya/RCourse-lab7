@@ -14,9 +14,9 @@ testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 set.seed(12345)
 ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
 summary(ridgereg_fit)
-# print(ridgereg_fit)
-# ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
-# print(ridgereg_forward_fit)
+print(ridgereg_fit)
+ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
+print(ridgereg_forward_fit)
 
 ## ------------------------------------------------------------------------
 # set.seed(12345)
