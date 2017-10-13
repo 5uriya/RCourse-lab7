@@ -12,7 +12,7 @@
 
 <meta name="author" content="Saman and Rabnawaz" />
 
-<meta name="date" content="2017-10-12" />
+<meta name="date" content="2017-10-13" />
 
 <title>Implementation of ridreg regression Class ridreg</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Implementation of ridreg regression Class <code>ridreg</code></h1>
 <h4 class="author"><em>Saman and Rabnawaz</em></h4>
-<h4 class="date"><em>2017-10-12</em></h4>
+<h4 class="date"><em>2017-10-13</em></h4>
 
 
 
@@ -89,47 +89,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Evaluate the performance of all three models on the test dataset and write some concluding com- ments.</li>
 </ul>
 <div id="divide-the-bostonhousing-data" class="section level3">
-<h3>Divide the BostonHousing data</h3>
-<pre><code>## Loading required package: lattice</code></pre>
+<h3>1. Divide the BostonHousing data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlbench)
+<span class="kw">library</span>(caret)
+<span class="kw">library</span>(statPack)</code></pre></div>
+</div>
+<div id="creating-test-and-training-data-set" class="section level3">
+<h3>Creating Test and Training Data set</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;BostonHousing&quot;</span>) <span class="co">#load a data</span>
 boston_data &lt;-<span class="st"> </span>BostonHousing <span class="co">#set a data to variable</span>
 indexes =<span class="st"> </span><span class="kw">createDataPartition</span>(boston_data<span class="op">$</span>rm, <span class="dt">p =</span> .<span class="dv">70</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>, <span class="dt">times =</span> <span class="dv">1</span>)
 training&lt;-<span class="st"> </span>boston_data[indexes,] <span class="co">#assigninng 70% data to test</span>
 testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexes,]  <span class="co">#assigning remaining 30% data to training set</span></code></pre></div>
+</div>
+<div id="fit-linear-regression-model-and-linear-regression-model-with-forward-selection" class="section level3">
+<h3>2. Fit Linear Regression Model and Linear Regression Model with Forward selection</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
 ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
-<span class="kw">summary</span>(ridgereg_fit)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = .outcome ~ ., data = dat)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.3855 -0.1925  0.0214  0.1900  2.1800 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  5.970e+00  5.314e-01  11.233  &lt; 2e-16 ***
-## crim         7.604e-05  4.237e-03   0.018   0.9857    
-## zn           2.663e-03  1.508e-03   1.767   0.0782 .  
-## indus       -1.043e-02  6.863e-03  -1.520   0.1294    
-## chas1       -1.671e-01  1.181e-01  -1.415   0.1580    
-## nox         -8.059e-02  4.343e-01  -0.186   0.8529    
-## age          5.878e-03  1.476e-03   3.983 8.31e-05 ***
-## dis         -5.558e-03  2.450e-02  -0.227   0.8206    
-## rad          1.166e-02  7.422e-03   1.572   0.1170    
-## tax          6.021e-05  4.144e-04   0.145   0.8846    
-## ptratio      1.198e-03  1.533e-02   0.078   0.9377    
-## b           -1.230e-03  3.016e-04  -4.079 5.63e-05 ***
-## lstat       -4.223e-02  5.811e-03  -7.267 2.51e-12 ***
-## medv         4.030e-02  4.754e-03   8.477 7.00e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.4457 on 342 degrees of freedom
-## Multiple R-squared:  0.6174, Adjusted R-squared:  0.6029 
-## F-statistic: 42.45 on 13 and 342 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(ridgereg_fit)</code></pre></div>
+<span class="kw">print</span>(ridgereg_fit)</code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 356 samples
@@ -140,8 +117,8 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
 ## Resampling results:
 ## 
-##   RMSE       Rsquared   MAE      
-##   0.4743291  0.5672193  0.3104516
+##   RMSE       Rsquared   MAE    
+##   0.4784465  0.5151652  0.32231
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
@@ -157,22 +134,82 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5049814  0.4997481  0.3464755
-##   3      0.4874156  0.5343533  0.3290772
-##   4      0.4807787  0.5466874  0.3184107
+##   2      0.5046616  0.4525232  0.3464741
+##   3      0.5022319  0.4582629  0.3406936
+##   4      0.5021434  0.4591152  0.3356714
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>
 </div>
-<div id="fit-a-linear-regression-model-and-a-linear-regression-model-with-forward-selection" class="section level3">
-<h3>Fit a linear regression model and a linear regression model with forward selection</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set.seed(12345)</span>
-<span class="co"># ridgereg_fit &lt;- train(rm ~ . , data = training, method = &quot;lm&quot;)</span>
-<span class="co"># # summary(ridgereg_fit)</span>
-<span class="co"># print(ridgereg_fit)</span>
-<span class="co"># set.seed(12345)</span>
-<span class="co"># ridgereg_forward_fit &lt;- train(rm ~ ., data = training, method = &quot;leapForward&quot;)</span>
-<span class="co"># print(ridgereg_forward_fit)</span></code></pre></div>
+<div id="performance-of-this-model-on-the-training-dataset." class="section level3">
+<h3>3. performance of this model on the training dataset.</h3>
+<p>to answere here</p>
+</div>
+<div id="creating-custom-model-for-ridge-regression" class="section level3">
+<h3>4. Creating Custom Model for Ridge Regression</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridge_custom &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;Regression&quot;</span>),<span class="dt">library=</span><span class="st">&quot;statPack&quot;</span>,<span class="dt">loop=</span><span class="ot">NULL</span>,<span class="dt">prob=</span><span class="ot">NULL</span>)
+
+ridge_custom<span class="op">$</span>parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">parameter=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">class=</span><span class="st">&quot;numeric&quot;</span>,<span class="dt">label=</span><span class="st">&quot;lambda&quot;</span>)
+
+ridge_custom<span class="op">$</span>grid &lt;-<span class="st"> </span><span class="cf">function</span>(y,x, <span class="dt">len=</span><span class="ot">NULL</span>, <span class="dt">search=</span><span class="st">&quot;grid&quot;</span>)
+{
+    <span class="cf">if</span>(search <span class="op">==</span><span class="st"> &quot;grid&quot;</span>) {
+    out &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">4</span>, <span class="dt">length =</span> len <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))
+  } <span class="cf">else</span> {
+    out &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lambda =</span> <span class="dv">10</span><span class="op">^</span><span class="kw">runif</span>(len, <span class="dt">min =</span> <span class="op">-</span><span class="dv">5</span>, <span class="dv">1</span>))
+  }
+  out
+
+
+}
+
+ridge_custom<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, wts, param, lev, last, classProbs, ...)
+{
+<span class="cf">if</span> (<span class="kw">is.data.frame</span>(x))
+    dat&lt;-<span class="st"> </span>x
+  <span class="cf">else</span> <span class="kw">as.data.frame</span>(x)
+    dat<span class="op">$</span>.outcome &lt;-<span class="st"> </span>y
+  result &lt;-<span class="st"> </span>ridgereg<span class="op">$</span><span class="kw">new</span>(dat<span class="op">$</span>.outcome <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> dat, <span class="dt">lambda=</span>param<span class="op">$</span>lambda, ...)
+  result
+}
+
+ridge_custom<span class="op">$</span>predict &lt;-<span class="st"> </span><span class="cf">function</span> (modelFit, newdata, <span class="dt">submodels =</span> <span class="ot">NULL</span>) {
+  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.data.frame</span>(newdata))
+  {
+    newdata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(newdata)
+  }
+  modelFit<span class="op">$</span><span class="kw">predict</span>(newdata)
+}
+
+
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+result &lt;-<span class="st"> </span><span class="kw">train</span>( rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>training, <span class="dt">method=</span><span class="st">&quot;ridge&quot;</span>)</code></pre></div>
+<pre><code>## Loading required package: lars</code></pre>
+<pre><code>## Loaded lars 1.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(result)</code></pre></div>
+<pre><code>## Ridge Regression 
+## 
+## 356 samples
+##  13 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
+## Resampling results across tuning parameters:
+## 
+##   lambda  RMSE       Rsquared   MAE      
+##   0e+00   0.4784465  0.5151652  0.3223100
+##   1e-04   0.4784338  0.5151875  0.3223024
+##   1e-01   0.4746785  0.5217802  0.3223696
+## 
+## RMSE was used to select the optimal model using  the smallest value.
+## The final value used for the model was lambda = 0.1.</code></pre>
+</div>
+<div id="section" class="section level3">
+<h3>5.</h3>
+</div>
+<div id="section-1" class="section level3">
+<h3>6.</h3>
 <p>Also a quote using <code>&gt;</code>:</p>
 <blockquote>
 <p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>

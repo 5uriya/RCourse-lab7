@@ -29,7 +29,7 @@ http://topepo.github.io/caret/training.html.
 - Evaluate the performance of all three models on the test dataset and write some concluding com-
 ments.
 
-### Divide the BostonHousing data
+### 1. Divide the BostonHousing data
 ```{r, echo=TRUE , results= "hide", warning=FALSE , message=FALSE}
 library(mlbench)
 library(caret)
@@ -46,7 +46,7 @@ testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
 
 ```
 
-###Fit Linear Regression Model and Linear Regression Model with Forward selection
+### 2. Fit Linear Regression Model and Linear Regression Model with Forward selection
 
 ```{r}
 set.seed(12345)
@@ -57,8 +57,10 @@ ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
 print(ridgereg_forward_fit)
 ```
 
+### 3. performance of this model on the training dataset.
+to answere here
 
-###Creating Custom Model for Ridge Regression
+### 4. Creating Custom Model for Ridge Regression
 ```{r}
 ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
 
@@ -97,10 +99,13 @@ ridge_custom$predict <- function (modelFit, newdata, submodels = NULL) {
 
 set.seed(12345)
 result <- train( rm ~ ., data=training, method="ridge")
-result
+print(result)
 
 ```
+### 5.
 
+
+### 6.
 
 Also a quote using `>`:
 
