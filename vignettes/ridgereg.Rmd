@@ -62,11 +62,11 @@ to answere here
 
 ### 4. Creating Custom Model for Ridge Regression
 ```{r}
-ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
+ridge <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
 
-ridge_custom$parameters <- data.frame(parameter="lambda",class="numeric",label="lambda")
+ridge$parameters <- data.frame(parameter="lambda",class="numeric",label="lambda")
 
-ridge_custom$grid <- function(y,x, len=NULL, search="grid")
+ridge$grid <- function(y,x, len=NULL, search="grid")
 {
     if(search == "grid") {
     out <- expand.grid(lambda = c(0, 10 ^ seq(-1, -4, length = len - 1)))
@@ -78,7 +78,7 @@ ridge_custom$grid <- function(y,x, len=NULL, search="grid")
 
 }
 
-ridge_custom$fit <- function (x, y, wts, param, lev, last, classProbs, ...)
+ridge$fit <- function (x, y, wts, param, lev, last, classProbs, ...)
 {
 if (is.data.frame(x))
     dat<- x
@@ -88,7 +88,7 @@ if (is.data.frame(x))
   result
 }
 
-ridge_custom$predict <- function (modelFit, newdata, submodels = NULL) {
+ridge$predict <- function (modelFit, newdata, submodels = NULL) {
   if (!is.data.frame(newdata))
   {
     newdata <- as.data.frame(newdata)
@@ -97,9 +97,9 @@ ridge_custom$predict <- function (modelFit, newdata, submodels = NULL) {
 }
 # 
 # 
-# set.seed(12345)
-# result <- train( rm ~ ., data=training, method="ridge")
-# print(result)
+set.seed(12345)
+result <- train( rm ~ ., data=training, method = "ridge")
+print(result)
 
 ```
 ### 5.
