@@ -20,7 +20,7 @@ ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
 print(ridgereg_forward_fit)
 
 ## ------------------------------------------------------------------------
-ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
+# ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
 
 # ridge_custom$parameters <- data.frame(parameter="lambda",class="numeric",label="lambda")
 # 
