@@ -98,7 +98,7 @@ ridge$predict <- function (modelFit, newdata, submodels = NULL) {
 # 
 # 
 set.seed(12345)
-# result <- train( rm ~ ., data=training, method = "ridge")
+result <- caret::train( rm ~ ., data=training, method = "ridge")
 # print(result)
 
 ```
