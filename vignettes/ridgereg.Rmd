@@ -62,7 +62,7 @@ to answere here
 
 ### 4. Creating Custom Model for Ridge Regression
 ```{r}
-# ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
+ridge_custom <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
 
 # ridge_custom$parameters <- data.frame(parameter="lambda",class="numeric",label="lambda")
 # 
