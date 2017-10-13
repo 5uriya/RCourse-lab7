@@ -87,19 +87,19 @@ if (is.data.frame(x))
   result <- ridgereg$new(dat$.outcome ~ ., data = dat, lambda=param$lambda, ...)
   result
 }
-# 
-# ridge_custom$predict <- function (modelFit, newdata, submodels = NULL) {
-#   if (!is.data.frame(newdata))
-#   {
-#     newdata <- as.data.frame(newdata)
-#   }
-#   modelFit$predict(newdata)
-# }
-# 
-# 
-# set.seed(12345)
-# result <- train( rm ~ ., data=training, method="ridge")
-# print(result)
+
+ridge_custom$predict <- function (modelFit, newdata, submodels = NULL) {
+  if (!is.data.frame(newdata))
+  {
+    newdata <- as.data.frame(newdata)
+  }
+  modelFit$predict(newdata)
+}
+
+
+set.seed(12345)
+result <- train( rm ~ ., data=training, method="ridge")
+print(result)
 
 ```
 ### 5.
