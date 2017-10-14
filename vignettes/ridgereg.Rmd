@@ -40,16 +40,16 @@ library(statPack)
 ```{r}
 data("BostonHousing") #load a data
 boston_data <- BostonHousing #set a data to variable
-indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
-training<- boston_data[indexes,] #assigninng 70% data to test
-testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
+indexes = createDataPartition(boston_data$medv, p = .75, list = FALSE, times = 1)
+training<- boston_data[indexes,] #assigninng 75% data to test
+testing<- boston_data[-indexes,]  #assigning remaining 25% data to training set
 
 ```
 
 ### 2. Fit Linear Regression Model and Linear Regression Model with Forward selection
 
 ```{r}
-set.seed(12345)
+set.seed(-312312L)
 ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
 print(ridgereg_fit)
 
@@ -62,37 +62,28 @@ to answere here
 
 ### 4. Creating Custom Model for Ridge Regression
 ```{r}
-ridgemodel <- list(type= "Regression" ,library="statPack",loop=NULL,prob=NULL)
-
-ridgemodel$parameters <- data.frame(parameter="lambda",class="numeric",label= "Ridge Regression")
-
-ridgemodel$grid <- function(y,x, len=NULL, search="grid")
-{
-  if(search == "grid") {
-    out <- expand.grid(lambda = c(0, 10 ^ seq(-1, -4, length = len - 1)))
-  } else {
-    out <- data.frame(lambda = 10^runif(len, min = -5, 1))
-  }
-  out
-
-
+ridge <- list(type="Regression", 
+              library="statPack",
+              loop=NULL,
+              prob=NULL)
+ridge$parameters <- data.frame(parameter="lambda",
+                               class="numeric",
+                               label="lambda")
+ridge$grid <- function(y,x, len=NULL, search="grid"){
+  data.frame(lambda=c(0.1,0.5,1,2))
 }
-
-ridgemodel$fit <- function (x, y, wts, param, lev, last, classProbs, ...)
-{
-  dat <- if (is.data.frame(x))
-     x
+ridge$fit <- function (x, y, wts, param, lev, last, classProbs, ...) {
+  dat <- if (is.data.frame(x)) 
+    x
   else as.data.frame(x)
   dat$.outcome <- y
-  result <- statPack::ridgereg$new(dat$.outcome ~ ., data = dat, lambda=param$lambda, ...)
-  result
+  out <- ridgereg$new(.outcome ~ ., data = dat, lambda=param$lambda, ...)
+  out
 }
-
-ridgemodel$predict <- function (modelFit, newdata, submodels = NULL) {
-  if (!is.data.frame(newdata))
-  {
+ridge$predict <- function (modelFit, newdata, submodels = NULL) {
+  if (!is.data.frame(newdata)) 
     newdata <- as.data.frame(newdata)
-  }
+  newdata[,apply(newdata, MARGIN=2, sd)!=0] <- scale(newdata[,apply(newdata, MARGIN=2, sd)!=0])
   modelFit$predict(newdata)
 }
 ```
@@ -100,15 +91,26 @@ ridgemodel$predict <- function (modelFit, newdata, submodels = NULL) {
 
 ```{r, echo=TRUE , results= "hide", warning=FALSE , message=FALSE  ,eval = FALSE}
 #result will store in train function
-result <- train( rm ~ ., data=training, method= ridgemodel)
-result
+result <- train( medv ~ ., data=training, method=ridge)
 ```
-### 5.
+### 5. Appication of 10-fold cross validation
+```{r, echo=TRUE , results= "hide", warning=FALSE , message=FALSE  ,eval = FALSE}
+fitControl <- control <- trainControl(method = "repeatedcv",
+                        number=10,
+                        repeats = 10)
+
+ result <- train(crim ~ ., data = training,method = ridgemodel,preProc = c("scale","center"),
+       tuneLength = 10,trControl = fitControl)
+````
 
 
-### 6.
+### 6.Evaluation of Models:
+Based on the RMSE values of each model, it is estimated that ridge model is better than lm and leap forward regressions.
 
-Also a quote using `>`:
+## `Repo link`
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+> "Here you can find a private repo link which will be public soon"
+([Rcourse-Lab7](https://github.com/rjkhan/RCourse-lab7))
+
+#### query
+`rabnsh696@student.liu.se` or `samza595@student.liu.se` 
