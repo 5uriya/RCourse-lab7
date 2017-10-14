@@ -48,10 +48,16 @@ ridgereg <- setRefClass("ridgereg",
                             datasetName <<-  deparse(substitute(data))
 
                           },
-                          predict =  function()
+                          predict =  function(values=NULL)
                           {
                             "This function returns the vector of calculated fitted values"
-                            return(y_hat)
+                            if(is.null(newdata)){
+                              result <- y_hat
+                            } else{
+                              predict<-as.numeric(t(as.matrix(values)%*%beta_ridge))
+                              return(predict)
+                            }
+                            return(result)
                           },
                           coef = function()
                           {

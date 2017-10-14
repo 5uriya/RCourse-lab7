@@ -1,27 +1,27 @@
-## ---- echo=TRUE , results= "hide", warning=FALSE , message=FALSE---------
 library(mlbench)
 library(caret)
 library(statPack)
 
-## ------------------------------------------------------------------------
+
 data("BostonHousing") #load a data
 boston_data <- BostonHousing #set a data to variable
-indexes = createDataPartition(boston_data$rm, p = .70, list = FALSE, times = 1)
-training<- boston_data[indexes,] #assigninng 70% data to test
-testing<- boston_data[-indexes,]  #assigning remaining 30% data to training set
+indexes = createDataPartition(boston_data$crim, p = 0.8, list = FALSE, times = 1)
+training<- boston_data[indexes,] 
+testing<- boston_data[-indexes,]
 
+#LM
 
-## ------------------------------------------------------------------------
 set.seed(-312312L)
-ridgereg_fit <- train(rm ~ . , data = training, method = "lm")
-print(ridgereg_fit)
+ridgereg_fit <- train(crim ~ . , data = training, method = "lm")
+#LM leap forward
+ridgereg_forward_fit <- train(crim ~ ., data = training, method = "leapForward")
 
-ridgereg_forward_fit <- train(rm ~ ., data = training, method = "leapForward")
-print(ridgereg_forward_fit)
 
-## ------------------------------------------------------------------------
+#Custom Ridge
+
+
 ridge <- list(type="Regression", 
-              library="statPack",
+              library="lab7",
               loop=NULL,
               prob=NULL)
 ridge$parameters <- data.frame(parameter="lambda",
@@ -31,9 +31,7 @@ ridge$grid <- function(y,x, len=NULL, search="grid"){
   data.frame(lambda=c(0.1,0.5,1,2))
 }
 ridge$fit <- function (x, y, wts, param, lev, last, classProbs, ...) {
-  dat <- if (is.data.frame(x)) 
-    x
-  else as.data.frame(x)
+  dat <- if (is.data.frame(x)) x else as.data.frame(x)
   dat$.outcome <- y
   out <- ridgereg$new(.outcome ~ ., data = dat, lambda=param$lambda, ...)
   out
@@ -45,3 +43,11 @@ ridge$predict <- function (modelFit, newdata, submodels = NULL) {
   modelFit$predict(newdata)
 }
 
+
+Fitcontrol <- trainControl(method = "repeatedcv",
+                        number=10,
+                        repeats = 10)
+
+
+set.seed(12345)
+(lm.ridge <- train(medv ~ ., data=training, method=ridge, trControl=Fitcontrol))

@@ -104,7 +104,7 @@ testing&lt;-<span class="st"> </span>boston_data[<span class="op">-</span>indexe
 </div>
 <div id="fit-linear-regression-model-and-linear-regression-model-with-forward-selection" class="section level3">
 <h3>2. Fit Linear Regression Model and Linear Regression Model with Forward selection</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12345</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="op">-</span>312312L)
 ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>. , <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)
 <span class="kw">print</span>(ridgereg_fit)</code></pre></div>
 <pre><code>## Linear Regression 
@@ -118,7 +118,7 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Resampling results:
 ## 
 ##   RMSE       Rsquared  MAE      
-##   0.4320831  0.600135  0.3046389
+##   0.4758969  0.535988  0.3179294
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
@@ -134,9 +134,9 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.4693853  0.5070053  0.3369718
-##   3      0.4550420  0.5328635  0.3256038
-##   4      0.4458910  0.5522575  0.3113520
+##   2      0.4730735  0.5300769  0.3328127
+##   3      0.4651459  0.5474289  0.3211147
+##   4      0.4612362  0.5557225  0.3133940
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
 ## The final value used for the model was nvmax = 4.</code></pre>
@@ -180,8 +180,9 @@ ridgemodel<span class="op">$</span>predict &lt;-<span class="st"> </span><span c
   }
   modelFit<span class="op">$</span><span class="kw">predict</span>(newdata)
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#result &lt;- train( rm ~ ., data=training, method= ridgemodel, trControl = fitControl)</span>
-<span class="co">#result</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#result will store in train function</span>
+result &lt;-<span class="st"> </span><span class="kw">train</span>( rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>training, <span class="dt">method=</span> ridgemodel)
+result</code></pre></div>
 </div>
 <div id="section" class="section level3">
 <h3>5.</h3>

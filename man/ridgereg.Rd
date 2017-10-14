@@ -22,7 +22,7 @@ RC class mainpluate linear algeric caluclautions giving formula and data.
 
 \item{\code{initialize(formula, data, lambda = 0, normalize = FALSE)}}{This function acts as constructor}
 
-\item{\code{predict()}}{This function returns the vector of calculated fitted values}
+\item{\code{predict(new_data = NULL)}}{This function returns the vector of calculated fitted values}
 
 \item{\code{print()}}{This function prints the formula and dataset name as well as the calculated coefficients}
 }}
