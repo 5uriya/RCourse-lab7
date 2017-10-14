@@ -62,13 +62,13 @@ to answere here
 
 ### 4. Creating Custom Model for Ridge Regression
 ```{r}
-ridge <- list(type=c("Regression"),library="statPack",loop=NULL,prob=NULL)
+ridgemodel <- list(type= "Regression" ,library="statPack",loop=NULL,prob=NULL)
 
-ridge$parameters <- data.frame(parameter="lambda",class="numeric",label="lambda")
+ridgemodel$parameters <- data.frame(parameter="lambda",class="numeric",label= "Ridge Regression")
 
-ridge$grid <- function(y,x, len=NULL, search="grid")
+ridgemodel$grid <- function(y,x, len=NULL, search="grid")
 {
-    if(search == "grid") {
+  if(search == "grid") {
     out <- expand.grid(lambda = c(0, 10 ^ seq(-1, -4, length = len - 1)))
   } else {
     out <- data.frame(lambda = 10^runif(len, min = -5, 1))
@@ -78,29 +78,30 @@ ridge$grid <- function(y,x, len=NULL, search="grid")
 
 }
 
-ridge$fit <- function (x, y, wts, param, lev, last, classProbs, ...)
+ridgemodel$fit <- function (x, y, wts, param, lev, last, classProbs, ...)
 {
-if (is.data.frame(x))
-    dat<- x
+  dat <- if (is.data.frame(x))
+     x
   else as.data.frame(x)
-    dat$.outcome <- y
-  result <- ridgereg$new(dat$.outcome ~ ., data = dat, lambda=param$lambda, ...)
+  dat$.outcome <- y
+  result <- statPack::ridgereg$new(dat$.outcome ~ ., data = dat, lambda=param$lambda, ...)
   result
 }
 
-ridge$predict <- function (modelFit, newdata, submodels = NULL) {
+ridgemodel$predict <- function (modelFit, newdata, submodels = NULL) {
   if (!is.data.frame(newdata))
   {
     newdata <- as.data.frame(newdata)
   }
   modelFit$predict(newdata)
 }
-# 
-# 
-set.seed(12345)
-result <- caret::train( rm ~ ., data=training, method = "ridge")
-# print(result)
+```
 
+
+```{r, echo=TRUE , results= "hide", warning=FALSE , message=FALSE  ,eval = FALSE}
+#result will store in train function
+result <- train( rm ~ ., data=training, method= ridgemodel)
+result
 ```
 ### 5.
 

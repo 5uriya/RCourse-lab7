@@ -12,7 +12,7 @@
 
 <meta name="author" content="Saman and Rabnawaz" />
 
-<meta name="date" content="2017-10-13" />
+<meta name="date" content="2017-10-14" />
 
 <title>Implementation of ridreg regression Class ridreg</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Implementation of ridreg regression Class <code>ridreg</code></h1>
 <h4 class="author"><em>Saman and Rabnawaz</em></h4>
-<h4 class="date"><em>2017-10-13</em></h4>
+<h4 class="date"><em>2017-10-14</em></h4>
 
 
 
@@ -117,8 +117,8 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Summary of sample sizes: 356, 356, 356, 356, 356, 356, ... 
 ## Resampling results:
 ## 
-##   RMSE       Rsquared   MAE      
-##   0.5189697  0.4873981  0.3395656
+##   RMSE       Rsquared  MAE      
+##   0.4320831  0.600135  0.3046389
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgereg_forward_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> training, <span class="dt">method =</span> <span class="st">&quot;leapForward&quot;</span>)
@@ -134,12 +134,12 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 ## Resampling results across tuning parameters:
 ## 
 ##   nvmax  RMSE       Rsquared   MAE      
-##   2      0.5356060  0.4415361  0.3576514
-##   3      0.5339740  0.4474938  0.3547838
-##   4      0.5340567  0.4492126  0.3488233
+##   2      0.4693853  0.5070053  0.3369718
+##   3      0.4550420  0.5328635  0.3256038
+##   4      0.4458910  0.5522575  0.3113520
 ## 
 ## RMSE was used to select the optimal model using  the smallest value.
-## The final value used for the model was nvmax = 3.</code></pre>
+## The final value used for the model was nvmax = 4.</code></pre>
 </div>
 <div id="performance-of-this-model-on-the-training-dataset." class="section level3">
 <h3>3. performance of this model on the training dataset.</h3>
@@ -147,44 +147,41 @@ ridgereg_fit &lt;-<span class="st"> </span><span class="kw">train</span>(rm <spa
 </div>
 <div id="creating-custom-model-for-ridge-regression" class="section level3">
 <h3>4. Creating Custom Model for Ridge Regression</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridge_custom &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;Regression&quot;</span>),<span class="dt">library=</span><span class="st">&quot;statPack&quot;</span>,<span class="dt">loop=</span><span class="ot">NULL</span>,<span class="dt">prob=</span><span class="ot">NULL</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ridgemodel &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type=</span> <span class="st">&quot;Regression&quot;</span> ,<span class="dt">library=</span><span class="st">&quot;statPack&quot;</span>,<span class="dt">loop=</span><span class="ot">NULL</span>,<span class="dt">prob=</span><span class="ot">NULL</span>)
 
-<span class="co"># ridge_custom$parameters &lt;- data.frame(parameter=&quot;lambda&quot;,class=&quot;numeric&quot;,label=&quot;lambda&quot;)</span>
-<span class="co"># </span>
-<span class="co"># ridge_custom$grid &lt;- function(y,x, len=NULL, search=&quot;grid&quot;)</span>
-<span class="co"># {</span>
-<span class="co">#     if(search == &quot;grid&quot;) {</span>
-<span class="co">#     out &lt;- expand.grid(lambda = c(0, 10 ^ seq(-1, -4, length = len - 1)))</span>
-<span class="co">#   } else {</span>
-<span class="co">#     out &lt;- data.frame(lambda = 10^runif(len, min = -5, 1))</span>
-<span class="co">#   }</span>
-<span class="co">#   out</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># ridge_custom$fit &lt;- function (x, y, wts, param, lev, last, classProbs, ...)</span>
-<span class="co"># {</span>
-<span class="co"># if (is.data.frame(x))</span>
-<span class="co">#     dat&lt;- x</span>
-<span class="co">#   else as.data.frame(x)</span>
-<span class="co">#     dat$.outcome &lt;- y</span>
-<span class="co">#   result &lt;- ridgereg$new(dat$.outcome ~ ., data = dat, lambda=param$lambda, ...)</span>
-<span class="co">#   result</span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># ridge_custom$predict &lt;- function (modelFit, newdata, submodels = NULL) {</span>
-<span class="co">#   if (!is.data.frame(newdata))</span>
-<span class="co">#   {</span>
-<span class="co">#     newdata &lt;- as.data.frame(newdata)</span>
-<span class="co">#   }</span>
-<span class="co">#   modelFit$predict(newdata)</span>
-<span class="co"># }</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># set.seed(12345)</span>
-<span class="co"># result &lt;- train( rm ~ ., data=training, method=&quot;ridge&quot;)</span>
-<span class="co"># print(result)</span></code></pre></div>
+ridgemodel<span class="op">$</span>parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">parameter=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">class=</span><span class="st">&quot;numeric&quot;</span>,<span class="dt">label=</span> <span class="st">&quot;Ridge Regression&quot;</span>)
+
+ridgemodel<span class="op">$</span>grid &lt;-<span class="st"> </span><span class="cf">function</span>(y,x, <span class="dt">len=</span><span class="ot">NULL</span>, <span class="dt">search=</span><span class="st">&quot;grid&quot;</span>)
+{
+  <span class="cf">if</span>(search <span class="op">==</span><span class="st"> &quot;grid&quot;</span>) {
+    out &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">4</span>, <span class="dt">length =</span> len <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)))
+  } <span class="cf">else</span> {
+    out &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lambda =</span> <span class="dv">10</span><span class="op">^</span><span class="kw">runif</span>(len, <span class="dt">min =</span> <span class="op">-</span><span class="dv">5</span>, <span class="dv">1</span>))
+  }
+  out
+
+
+}
+
+ridgemodel<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, wts, param, lev, last, classProbs, ...)
+{
+  dat &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">is.data.frame</span>(x))
+     x
+  <span class="cf">else</span> <span class="kw">as.data.frame</span>(x)
+  dat<span class="op">$</span>.outcome &lt;-<span class="st"> </span>y
+  result &lt;-<span class="st"> </span>statPack<span class="op">::</span>ridgereg<span class="op">$</span><span class="kw">new</span>(dat<span class="op">$</span>.outcome <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> dat, <span class="dt">lambda=</span>param<span class="op">$</span>lambda, ...)
+  result
+}
+
+ridgemodel<span class="op">$</span>predict &lt;-<span class="st"> </span><span class="cf">function</span> (modelFit, newdata, <span class="dt">submodels =</span> <span class="ot">NULL</span>) {
+  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.data.frame</span>(newdata))
+  {
+    newdata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(newdata)
+  }
+  modelFit<span class="op">$</span><span class="kw">predict</span>(newdata)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#result &lt;- train( rm ~ ., data=training, method= ridgemodel, trControl = fitControl)</span>
+<span class="co">#result</span></code></pre></div>
 </div>
 <div id="section" class="section level3">
 <h3>5.</h3>
