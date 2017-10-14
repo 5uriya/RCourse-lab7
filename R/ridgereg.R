@@ -5,7 +5,7 @@
 #' @name ridgereg
 #' @export ridgereg
 #' @exportClass ridgereg
-
+ 
 ridgereg <- setRefClass("ridgereg",
                         fields = list(formula="formula",data="data.frame",
                                       lambda="numeric",datasetName="character",
